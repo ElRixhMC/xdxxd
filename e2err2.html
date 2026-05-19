@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para</title> karisita
+    <style>
+        /* Variables de Paleta de Colores y Estilos Globales */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fff0f2 0%, #fbc4cb 100%);
+            --primary-color: #512b32;
+            --accent-pink: #d77a8a;
+            --accent-hover: #b85c6c;
+            --accent-blue: #9cbcc3;
+            --accent-blue-hover: #7fa4ac;
+            --text-dark: #3d262a;
+            --text-light: #7d5e64;
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --card-border: rgba(215, 122, 138, 0.25);
+            --shadow-sm: 0 4px 12px rgba(81, 43, 50, 0.05);
+            --shadow-md: 0 12px 32px rgba(81, 43, 50, 0.1);
+            --font-serif: 'Georgia', serif;
+            --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-gradient);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Contenedor de Partículas de Corazón Flotantes */
+        #particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: var(--accent-pink);
+            opacity: 0.6;
+            animation: floatUp 6s linear infinite;
+            font-size: 1.2rem;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) translateX(0) scale(0.5);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% {
+                transform: translateY(-5vh) translateX(50px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Contenedor Principal */
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Encabezado */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .heart-main {
+            font-size: 3rem;
+            color: var(--accent-pink);
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Contador de Tiempo */
+        .counter-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            margin-bottom: 40px;
+            animation: fadeInDown 1.2s ease-out;
+        }
+
+        .counter-section h2 {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .timer-box {
+            background: white;
+            border: 1px solid rgba(215, 122, 138, 0.15);
+            padding: 12px 5px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timer-number {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-pink);
+            line-height: 1.2;
+        }
+
+        .timer-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Sección 1: La Carta Secreta (Sobre Interactivo) */
+        .envelope-section {
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .envelope-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+        }
+
+        .envelope-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(81, 43, 50, 0.15);
+        }
+
+        .seal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-card.opened .seal-icon {
+            transform: rotate(180deg) scale(0.8);
+        }
+
+        .envelope-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .envelope-hint {
+            font-size: 0.95rem;
+            color: var(--accent-pink);
+            font-weight: 500;
+        }
+
+        .letter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+            opacity: 0;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        .envelope-card.opened .letter-content {
+            max-height: 1000px;
+            opacity: 1;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px dashed var(--card-border);
+        }
+
+        .letter-text {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .letter-signature {
+            margin-top: 25px;
+            text-align: right;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Sección: Léeme cuando estés triste */
+        .sad-section {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(156, 188, 195, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            margin-bottom: 50px;
+        }
+
+        .sad-section h2 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: #3b5256;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .sad-desc {
+            font-size: 1rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sad-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn-sad-trigger {
+            background: #f0f5f6;
+            color: #4a6367;
+            border: 1px solid rgba(156, 188, 195, 0.4);
+            padding: 15px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-sad-trigger:hover {
+            background: var(--accent-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(156, 188, 195, 0.3);
+        }
+
+        .btn-sad-trigger.active {
+            background: #6b8f96;
+            color: white;
+            border-color: #6b8f96;
+        }
+
+        .sad-message-box {
+            background: white;
+            border-left: 4px solid #6b8f96;
+            border-radius: 4px 12px 12px 4px;
+            padding: 25px;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .sad-message-box.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sad-message-text {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            color: #2f3e41;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        /* Sección 2: El Oráculo del Amor */
+        .roulette-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            margin-bottom: 50px;
+        }
+
+        .roulette-section h2 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .roulette-desc {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+
+        .btn-action {
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(215, 122, 138, 0.4);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-action:hover {
+            background: var(--accent-hover);
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(215, 122, 138, 0.6);
+        }
+
+        .random-reason-display {
+            margin-top: 30px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(215, 122, 138, 0.15);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .random-reason-display.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .random-reason-text {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Sección 3: Explorador de las 100 Razones */
+        .reasons-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .reasons-header-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .reasons-header-box h2 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(215, 122, 138, 0.2);
+            background: #fff;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+            font-size: 1.1rem;
+        }
+
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .reasons-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+        .reasons-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        .reasons-grid::-webkit-scrollbar-thumb {
+            background: var(--accent-pink);
+            border-radius: 10px;
+        }
+
+        .reason-card {
+            background: white;
+            border: 1px solid rgba(215, 122, 138, 0.12);
+            border-radius: 15px;
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .reason-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(81, 43, 50, 0.08);
+            border-color: rgba(215, 122, 138, 0.3);
+        }
+
+        .reason-number {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-pink);
+            background: #fff0f2;
+            padding: 4px 10px;
+            border-radius: 20px;
+            align-self: flex-start;
+        }
+
+        .reason-text {
+            font-size: 0.98rem;
+            color: var(--text-dark);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+            font-style: italic;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .wrapper { padding: 20px 15px; }
+            h1 { font-size: 2rem; }
+            .envelope-card, .sad-section, .reasons-section, .roulette-section { padding: 25px 15px; }
+            .random-reason-text, .sad-message-text { font-size: 1.15rem; }
+            .sad-buttons-grid { grid-template-columns: 1fr; }
+            .timer-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-container"></div>
+
+    <div class="wrapper">
+        <header>
+            <div class="heart-main">❤️</div>
+            <h1>Este es un espacio dedicado a nuestra relacion</h1>
+            <p class="subtitle">Cada segundo que pasa, se construye nuestra bonita historia</p>
+        </header>
+
+        <!-- Contador de Tiempo Ajustado -->
+        <section class="counter-section">
+            <h2>El tiempo que llevamos construyendo nuestra historia:</h2>
+            <div class="timer-grid">
+                <div class="timer-box">
+                    <div class="timer-number" id="years">00</div>
+                    <div class="timer-label">Años</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-number" id="months">00</div>
+                    <div class="timer-label">Meses</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-number" id="days">00</div>
+                    <div class="timer-label">Días</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-number" id="hours">00</div>
+                    <div class="timer-label">Horas</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-number" id="minutes">00</div>
+                    <div class="timer-label">Min</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-number" id="seconds">00</div>
+                    <div class="timer-label">Seg</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 1: La Carta Secreta -->
+        <section class="envelope-section">
+            <div class="envelope-card" id="loveEnvelope" onclick="toggleLetter()">
+                <div class="seal-icon" id="sealIcon">✉️</div>
+                <div class="envelope-title" id="envelopeTitle">Abre la carta</div>
+                <div class="envelope-hint" id="envelopeHint">Dale click al sobre</div>
+                
+                <div class="letter-content">
+                    <div class="letter-text">Mi amor,
+
+                    Hola karisita, quiero darte este detalle porque me nace hacerlo, quiero que este espacio con la llave que te dare, sea un lugar donde puedas recordar lo mucho que te amo cuando no hablamos, cuando nos extrañamos o incluso cuando tengamos diferencias y todo lo que significas para mi. También quiero que puedas venir a recordar lo mucho que significas para mí cada vez que te sientas mal. No quiero que veas esto solo como palabras o frases bonitas, quiero que lo veas como un pequeño reflejo hacia mis sentimientos hacia vos, quiero hacer esto más que una carta.
+
+                    Si tuviera que describirte en una palabra, creo que sería "Irrepetible", porque sé perfectamente que ninguna otra mujer me haría sentir lo que mi karisita me hace sentir, sos la mujer de mis sueños y la novia que yo siempre deseé, sos mi otra mitad y la persona con quien yo quiero pasar el resto de mis dias, no quiero dejarte ni perderte nunca mi amor y estoy dispuesto a mejorar y corregir si hay algo que nos afecte, aumque no soy el mejor hablando de problemas te prometo que voy a esforzarme mi amor quiero que esta relacion dure lo que nos reste de vida, tengo cero dudas y estoy mas que seguro que eso no cambiará jamás. No hay otra mujer como mi karisita.
+
+                    Sabes amor, me llena el corazón saber que posiblemente estás sonriendo al leer esto y tienes esa forma de tus ojitos rasgados tan bonitos cuando sonries, cuanto quisiera poder verte así, me llenaría el alma, no se cuando pueda entregarte esto ya que aveces es dificil vernos pero mis sentimientos jamás desaparecerán, en cambio, se harán mas fuertes conforme pase el tiempo y de esto estoy muy muy seguro.
+
+                    Guarda la llave mi amor, quiero leer esto de nuevo cuando tengamos años de casados JAHSDKAH
+
+
+
+
+
+                    </div>
+                    <div class="letter-signature">Con todo mi amor, por siempre.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Interactiva: Léeme cuando estés triste -->
+        <section class="sad-section">
+            <h2>Leeme </h2>
+            <p class="sad-desc">Si hoy sientes que no puedes, dejame decirte esto mi amor</p>
+            
+            <div class="sad-buttons-grid">
+                <button class="btn-sad-trigger" onclick="showSadMessage(this, 'day')"> Tuviste un mal día o estás estresada</button>
+                <button class="btn-sad-trigger" onclick="showSadMessage(this, 'miss')"> Me extrañas mucho</button>
+                <button class="btn-sad-trigger" onclick="showSadMessage(this, 'doubt')"> Dudas de ti misma</button>
+                <button class="btn-sad-trigger" onclick="showSadMessage(this, 'hug')"> Necesitas un abrazo</button>
+            </div>
+
+            <div class="sad-message-box" id="sadMessageBox">
+                <p class="sad-message-text" id="sadMessageText">Selecciona un botón arriba para abrir una cajita amor...</p>
+            </div>
+        </section>
+
+        <!-- Sección 2: El Generador Aleatorio -->
+        <section class="roulette-section">
+            <h2>Elige un motivo al azar</h2>
+            <p class="roulette-desc">Al darle click verás uno de los tantos motivos por los que te amo al azar</p>
+            <button class="btn-action" onclick="generateRandomReason()">
+                <span></span> Obtener Razón Aleatoria
+            </button>
+            <div class="random-reason-display" id="randomDisplay">
+                <p class="random-reason-text" id="randomText">Haz clic arriba para descubrir una razón...</p>
+            </div>
+        </section>
+
+        <!-- Sección 3: Las 100 Razones Completas -->
+        <section class="reasons-section">
+            <div class="reasons-header-box">
+                <h2>Razones Para Amarte</h2>
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="searchBar" onkeyup="filterReasons()" placeholder="">
+                </div>
+            </div>
+
+            <div class="reasons-grid" id="reasonsGrid">
+                <div class="no-results" id="noResults">No encontré ninguna razón con esa palabra, dime que palabra es por whaths y te la doy te amo mucho</div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Hecho para karisita el amor de mi vida &bull; 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // FECHA EXACTA CONFIGURADA: 4 de Diciembre de 2025, 14:42 (2:42 p.m.)
+        // Nota: En JS los meses van de 0 a 11 (Diciembre es el mes 11)
+        const FECHA_INICIO = new Date(2025, 11, 4, 14, 44, 0); 
+
+        function updateTimer() {
+            const ahora = new Date();
+            let diferencia = ahora - FECHA_INICIO;
+
+            if (diferencia < 0) diferencia = 0;
+
+            let años = ahora.getFullYear() - FECHA_INICIO.getFullYear();
+            let meses = ahora.getMonth() - FECHA_INICIO.getMonth();
+            let días = ahora.getDate() - FECHA_INICIO.getDate();
+
+            if (días < 0) {
+                const mesAnterior = new Date(ahora.getFullYear(), ahora.getMonth(), 0);
+                días += mesAnterior.getDate();
+                meses--;
+            }
+
+            if (meses < 0) {
+                meses += 12;
+                años--;
+            }
+
+            const totalSegundos = Math.floor(diferencia / 1000);
+            const horas = Math.floor((totalSegundos / 3600) % 24);
+            const minutos = Math.floor((totalSegundos / 60) % 60);
+            const segundos = Math.floor(totalSegundos % 60);
+
+            document.getElementById('years').innerText = años.toString().padStart(2, '0');
+            document.getElementById('months').innerText = meses.toString().padStart(2, '0');
+            document.getElementById('days').innerText = días.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = horas.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutos.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = segundos.toString().padStart(2, '0');
+        }
+
+        const sadMessages = {
+            day: "Mi amor, posiblemente hoy no tuviste un buen dia, o las cosas no salieron como esperabas, un mal día no define tu camino ni tu capacidad, ve hacia atrás y date cuenta de todo lo bueno que has hecho y todo lo que has luchado, un dia malo puede tenerlo cualquiera pero yo confio en mi novia y sé que sos fuerte, solo son un par de horas negativas que no te definen, yo creo en tu capacidad mi amor se que eres capaz de muchas cosas, a lo mejor necesitas un descanso mi amor pero si quieres puedes hablar siempre conmigo, nunca dejaré de estar presente si me necesitas.",
+            miss: "Aunque en este momento no estemos juntos fisicamente, te recuerdo que soy completamente tuyo y cada parte de mí te pertenece, no hay ninguna distancia que pueda frenar lo que yo siento por vos, si aveces no podemos vernos, siempre estaré pensando en vos, porque me haces bien. Tenemos toda una vida por delante juntos, tenemos que ser fuertes, cuando seamos mayores vamos a recordar estos días con nostalgia y vamos a poder vivir muchas mas cosas juntos.  ",
+            doubt: "Karisita, sé que la vida no te ha tratado de la mejor manera, pero tu te has levantado de cada prueba, estoy seguro que Dios tiene un proposito para vos, sos la mujer más hermosa que he conocido, por dentro y por fuera, no dejes que una nube de inseguridad nuble la buena persona que sos, ve hacia atras y date cuenta de todo lo que has hecho por las personas cercanas a ti, cambiaste mi vida karisita, yo voy a confiar en vos incluso cuando no lo hagas ni vos misma, yo confio en tus capacidades, sos mi mayor orgullo y no quiero que nunca lo olvides. Mi karisita es muy buena y yo sé que se va a levantar siempre porque tiene personas que quieren verla bien y yo soy una de ellas, yo estaré siempre para mi karisita. Como quisiera prestarte mis ojos para que te veas de la forma en la que yo lo hago, y te lo recuerdo, sos una mujer muy muy guapa y tambien el amor de mi vida, premio doble saqué",
+            hug: "No estás sola mi amor, trata de relajarte si?, Todo va a estar bien mi karisita, no sé si estés pasando algo dificil en este momento, pero amor, todo es parte de un proceso, si necesitas llorar o hablar conmigo puedes hacerlo, cierra los ojos e imagina que estoy junto a vos dandote un abrazo bonito muy reconfortante, cuando te vea te lo dare de verdad, amor de mi vida"
+        };
+
+        function showSadMessage(button, type) {
+            const buttons = document.querySelectorAll('.btn-sad-trigger');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const box = document.getElementById('sadMessageBox');
+            const textEl = document.getElementById('sadMessageText');
+
+            box.classList.remove('show');
+
+            setTimeout(() => {
+                textEl.innerHTML = sadMessages[type];
+                box.classList.add('show');
+            }, 200);
+        }
+
+        const reasons = [
+            "Por la forma tan hermosa en que me ves",
+            "Por tu sonrisa tan bonita, es de mis cosas favorita kari",
+            "Por la paz inmensa que nuestra relacion me da",
+            "Por tu apoyo en cada cosa que hago",
+            "Porque te acuerdas de cada minimo detalle",
+            "Por tus hermosos ojitos rasgados que me llenan de amor cuando sonries",
+            "Por la empatía que tienes sin importar quien sea",
+            "Porque por vos yo quiero superarme cada día",
+            "Por la conexion que tenemos, podemos ir sin hablar y sera lindo",
+            "Por tus abrazos que me llenan el alma",
+            "Porque si me siento mal, sé que estarás ahí para mi",
+            "Por la madurez con la que afrontas cualquier conflicto entre nosotros",
+            "Por tus mensajes de buenos dias y buenas noches, nunca seca te amo mucho",
+            "Porque aunque no lo veas, sos muy inteligente",
+            "Por como besas😲",
+            "Por tu responsabilidad afectiva",
+            "Porque sos muy buena niña y exclusiva",
+            "Por como sonamos cuando estamos juntos",
+            "Por todos los detalles que me das",
+            "Por como se ven tus ojitos al sonreír",
+            "Porque a pesar de todo, sé que nuestro amor crecerá",
+            "Porque me haces creer en un futuro juntos",
+            "Por hacerme sentir en un refugio completamente seguro cuando estoy a tu lado.",
+            "Porque sé que seremos muy buenos papás",
+            "Por comome haces sentir",
+            "Por todas las canciones importantes que me has dedicado",
+            "Por como celebraste mi cumpleaños",
+            "Por cómo celebras cada uno de mis triunfos y me felicitas y apoyas",
+            "Porque sé que nunca me tratarías mal",
+            "Por la confianza que hemos creado",
+            "Por como me ves cuadno estoy distraido (si me doy cuenta)",
+            "Por la relacion que hemos construido día con día",
+            "Por tus consejos amor sos muy buena",
+            "Por tu cuerpo tan lindo que tienes y que me atrae tanto",
+            "Haces que el tiempo se sienta super rapido",
+            "Por todos los planes y metas que teneemos juntos como esposos",
+            "Porque te considero esa persona que solo llega una vez en la vida",
+            "Porque sos karisita",
+            "Porque siempre me tienes sonriendo al pensar en vos",
+            "Porque puedo abrirme emocionalmente con vos",
+            "Porque sos la persona con la que quiero amanecer todos los dias de mi vida",
+            "Por la forma tan hermosa en que te preocupas por mi y las personas que quieres",
+            "Por todos los chambres JAJAJA",
+            "Por la manera tan random en la que nos conocimos",
+            "Porque siempre me defiendes cuando alguien me dice algo malo",
+            "Por como hablamos de nuestro futuro",
+            "Porque sos una hermosa mujer",
+            "Por todas las risas que me sacas",
+            "Por los recuerdos que hemos hecho y ya estan marcados en mi corazon",
+            "Por todas las veces que nos desvelamos hablando",
+            "Por la comodidad que me das",
+            "Porque me dices las cosas como son y no me ocultas nada",
+            "Porque solamente vos tenes el poder de mejorar mi dia instantaneamente",
+            "Porque me amas de la misma manera",
+            "Por que sos el amor de mi vida",
+            "Por la sensacion que me da besarnos y acariciarnos y eso ya sabes😲",
+            "Porque tenemos cosas unicas como el emoji de el caballo y la rana JAJJAA",
+            "Porque puedes ser mi amiga y mi novia al mismo tiempo",
+            "Por el respeto que ambos tenemos a nuestra relacion",
+            "Por hacer que una casa a medio construir tenga un significado enorme JAJAJA",
+            "Por las platicas serias que tenemos",
+            "Por ser asi de buena",
+            "Por marcar mi vida permanentemente",
+            "Por darle prioridad a nuestra relacion",
+            "Por como nos gustamos y atraemos",
+            "Por permitirme amarte de esta manera tan unica",
+            "Por ser la mujer que yo toda mi vida quise como mi novia",
+            "Por estar presente siempre",
+            "Por tu carita tan hermosa",
+            "Porque genuinamente ya sos parte de mí, sin mi karisita yo no soy nada",
+            
+        ];
+
+        function renderReasonsGrid() {
+            const grid = document.getElementById('reasonsGrid');
+            const noResults = document.getElementById('noResults');
+            const cards = grid.querySelectorAll('.reason-card');
+            cards.forEach(card => card.remove());
+
+            reasons.forEach((reason, index) => {
+                const card = document.createElement('div');
+                card.className = 'reason-card';
+                card.setAttribute('data-text', reason.toLowerCase());
+                card.innerHTML = `<div class="reason-number">Razón #${index + 1}</div><div class="reason-text">${reason}</div>`;
+                grid.insertBefore(card, noResults);
+            });
+        }
+
+        function filterReasons() {
+            const query = document.getElementById('searchBar').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.reason-card');
+            const noResults = document.getElementById('noResults');
+            let hasMatches = false;
+
+            cards.forEach(card => {
+                const text = card.getAttribute('data-text');
+                if (text.includes(query)) {
+                    card.style.display = 'flex';
+                    hasMatches = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            noResults.style.display = hasMatches ? 'none' : 'block';
+        }
+
+        function toggleLetter() {
+            const envelope = document.getElementById('loveEnvelope');
+            const seal = document.getElementById('sealIcon');
+            const title = document.getElementById('envelopeTitle');
+            const hint = document.getElementById('envelopeHint');
+            envelope.classList.toggle('opened');
+
+            if (envelope.classList.contains('opened')) {
+                seal.innerHTML = '❤️';
+                title.innerHTML = 'Oye te amo';
+                hint.innerHTML = 'Dale click para cerrarlo amor';
+            } else {
+                seal.innerHTML = '✉️';
+                title.innerHTML = 'Tienes una carta';
+                hint.innerHTML = 'Dale clic en el sobre para abrirla te amo mucho ';
+            }
+        }
+
+        function generateRandomReason() {
+            const display = document.getElementById('randomDisplay');
+            const textEl = document.getElementById('randomText');
+            display.classList.remove('show');
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * reasons.length);
+                textEl.innerHTML = ` Razón #${randomIndex + 1}: "${reasons[randomIndex]}"`;
+                display.classList.add('show');
+            }, 250);
+        }
+
+        function createHeartParticles() {
+            const container = document.getElementById('particles-container');
+            const maxParticles = 25;
+
+            setInterval(() => {
+                if (container.childElementCount >= maxParticles) return;
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = ['❤️', '💖', '💝', '💕', '🌸'][Math.floor(Math.random() * 5)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                const duration = 5 + Math.random() * 4;
+                heart.style.animationDuration = duration + 's';
+                const size = 0.8 + Math.random() * 0.8;
+                heart.style.fontSize = size + 'rem';
+                container.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, duration * 1000);
+            }, 400);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderReasonsGrid();
+            createHeartParticles();
+            
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        });
+    </script>
+</body>
+</html>
